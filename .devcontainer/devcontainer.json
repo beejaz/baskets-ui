@@ -1,0 +1,24 @@
+{
+    "name": "Baskets-ui Devcontainer",
+    "dockerFile": "Dockerfile",
+    "appPort": 3000,
+    "forwardPorts": [3000],
+    "workspaceFolder": "/workspaces/baskets-ui",
+    "mounts": [
+      "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+    ],
+    // "postCreateCommand": "sudo chown -R node ${containerWorkspaceFolder}/app/node_modules && cd app && bun install",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "csstools.postcss",
+          "dbaeumer.vscode-eslint",
+          "eamodio.gitlens",
+          "antfu.goto-alias",
+          "yoavbls.pretty-ts-errors",
+          "wayou.vscode-todo-highlight",
+          "bradlc.vscode-tailwindcss"
+        ]
+      }
+    }
+  }
