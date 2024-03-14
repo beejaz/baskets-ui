@@ -5,7 +5,7 @@ const stored_user_pubkey = "pubkey";
 // Enter your RPC endpoint here
 // If you don't have an RPC endpoint, you can use one of the free endpoints available here:
 // https://solana.com/rpc
-export const RPC_ENDPOINT = "YOUR_RPC_ENDPOINT_HERE";
+export const RPC_ENDPOINT = process.env.NEXT_PUBLIC_RPC_ENDPOINT ?? '';
 export const TOKEN_LIST_API = "https://token.jup.ag/strict";
 export const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
@@ -13,7 +13,7 @@ export const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 export const HOST_PUBKEY = new PublicKey('4Vry5hGDmbwGwhjgegHmoitjMHniSotpjBFkRuDYHcDG')
 
 // If you'd like to use comparison charts (benchmarks) on baskets, enter BIRDEYE_API_KEY here
-export const BIRDEYE_API_KEY = 'BIRDEYE_API_KEY_HERE';
+export const BIRDEYE_API_KEY = process.env.NEXT_PUBLIC_BIRDEYE_API_KEY ?? '';
 
 
 let connection = new Connection(RPC_ENDPOINT, "confirmed");
