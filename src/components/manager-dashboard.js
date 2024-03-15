@@ -1,17 +1,17 @@
-import { ChevronDownIcon, ChevronUpIcon, ClockIcon, LetterCaseCapitalizeIcon, ReloadIcon, TokensIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronUpIcon, ClockIcon, LetterCaseCapitalizeIcon, ReloadIcon, TokensIcon, GearIcon } from "@radix-ui/react-icons";
 import { useWallet } from "@solana/wallet-adapter-react"
 import { Button } from "./ui/button";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 
-export const ManagerDashboard = ({setEditHoldingsPopup, rebalanceHoldings}) => {
+export const ManagerDashboard = ({setEditHoldingsPopup, setEditVaultSettingsPopup, rebalanceHoldings}) => {
 
   const wallet = useWallet();
   const [managerDropdown, setManagerDropdown] = useState(true);
 
   return <div className="w-full flex flex-col justify-between p-4 gap-4 border rounded-xl select-none">
-    <div 
+    <div
       className="w-full flex items-center justify-between cursor-pointer"
       onClick={() => setManagerDropdown(!managerDropdown)}
     >
@@ -41,6 +41,10 @@ export const ManagerDashboard = ({setEditHoldingsPopup, rebalanceHoldings}) => {
           }} variant={"secondary"} className="gap-2">
             <LetterCaseCapitalizeIcon/>
             <p className="text-sm font-bold">Edit Description</p>
+          </Button>
+          <Button variant={"secondary"} className="gap-2" onClick={() => setEditVaultSettingsPopup(true)}>
+            <GearIcon/>
+            <p className="text-sm font-bold">Edit Settings</p>
           </Button>
           <Button onClick={() => {
             toast.success(<div className="flex flex-col">

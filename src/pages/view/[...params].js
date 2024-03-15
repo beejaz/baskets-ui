@@ -24,6 +24,7 @@ import { VaultIntegrations } from "@/components/vault-integrations";
 import { ManagerDashboard } from "@/components/manager-dashboard";
 import { VaultManager } from "@/components/vault-manager";
 import { EditHoldingsPopup } from "@/components/edit-holdings-popup";
+import { EditVaultSettingsPopup } from "@/components/edit-vault-settings-popup";
 import { useSymmetry } from "@/utils/SymmetryContext";
 import { PublicKey } from "@solana/web3.js";
 import toast from "react-hot-toast";
@@ -42,6 +43,7 @@ const VaultPage = ({}) => {
   const [reload, setReload] = useState(0);
   // popups
   const [editHoldingsPopup, setEditHoldingsPopup] = useState(false);
+  const [editVaultSettingsPopup, setEditVaultSettingsPopup] = useState(false);
   useEffect(() => {
     if(params && state.tokenList && sdk) {
       console.log("[params]", params[0])
@@ -112,7 +114,7 @@ const VaultPage = ({}) => {
           <div className="flex flex-col">
           <p className="text-lg font-bold">Rebalanced</p>
           <p className="text-sm text-muted-foreground">Basket rebalanced successfully</p>
-          {txs.filter(x => x).map((tx, i) => 
+          {txs.filter(x => x).map((tx, i) =>
             <Link className="text-xs text-blue-500" href={`https://solscan.io/tx/${tx}`} target="_blank">View on Solscan {i+1}</Link>
           )}
         </div>,{id: 3});
@@ -120,12 +122,12 @@ const VaultPage = ({}) => {
       setReload(reload + 1);
     })
   }
-  
+
 
   return <div className="w-full bg-background flex flex-col items-center gap-4">
-    <Header title={(basketInfo && basketInfo.parsed) ? 
+    <Header title={(basketInfo && basketInfo.parsed) ?
       `${basketInfo.parsed.name} | ${basketInfo.parsed.activelyManaged === 0 ? 'Bundle' : 'Portfolio'} - Symmetry`
-      : 
+      :
       "Symmetry"}
     path={'/explore'}
     />
@@ -137,9 +139,9 @@ const VaultPage = ({}) => {
           {/* Manage Section */}
           {
             basketInfo && wallet.connected && wallet.publicKey.toBase58() === basketInfo.parsed.manager &&
-            <ManagerDashboard setEditHoldingsPopup={setEditHoldingsPopup} rebalanceHoldings={rebalanceHoldings}/>
+            <ManagerDashboard setEditHoldingsPopup={setEditHoldingsPopup} setEditVaultSettingsPopup={setEditVaultSettingsPopup} rebalanceHoldings={rebalanceHoldings}/>
           }
-          
+
           {/* Vault Info */}
           <div className="w-full  flex flex-col p-4 gap-4 border rounded-xl">
             {/* Vault Name/Performance */}
@@ -223,7 +225,7 @@ const VaultPage = ({}) => {
               </div>
             </div>
           </div>
-          
+
           {/* Vault & Creator Description */}
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
             <VaultInfoBox vault={basketInfo}/>
@@ -232,7 +234,7 @@ const VaultPage = ({}) => {
 
           {/* Vault Composition */}
           {
-            basketInfo ? 
+            basketInfo ?
             <CompositionTable setEditHoldingsPopup={setEditHoldingsPopup} rebalanceHoldings={rebalanceHoldings} basket={basketInfo}/>
             :
             <Skeleton className="w-full h-64"/>
@@ -241,7 +243,7 @@ const VaultPage = ({}) => {
 
           </div>
         </div>
-        
+
         {/* Swap */}
         <div className="h-fit flex flex-col gap-4">
           {
@@ -257,6 +259,10 @@ const VaultPage = ({}) => {
     {
       editHoldingsPopup &&
       <EditHoldingsPopup basket={basketInfo} open={editHoldingsPopup} onClose={() => setEditHoldingsPopup(false)} setReload={setReload} reload={reload}/>
+    }
+    {
+      editVaultSettingsPopup &&
+      <EditVaultSettingsPopup basket={basketInfo} open={editVaultSettingsPopup} onClose={() => setEditVaultSettingsPopup(false)} setReload={setReload} reload={reload}/>
     }
   </div>
 }
